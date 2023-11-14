@@ -1,18 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:flutter_music/Common/my_routers.dart';
 import 'package:flutter_music/pages/play_list_page.dart';
 
-class NowPlayingPage extends StatelessWidget {
-  const NowPlayingPage({super.key});
+class NowPlayingPage extends StatefulWidget {
+  final Song song;
+
+  const NowPlayingPage({Key? key, required this.song}) : super(key: key);
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _NowPlayingPageState createState() => _NowPlayingPageState();
+}
+
+class _NowPlayingPageState extends State<NowPlayingPage> {
+  late AudioPlayer _audioPlayer;
+
+  @override
+  void initState() {
+    super.initState();
+    _audioPlayer = AudioPlayer();
+    _init();
+  }
+
+  Future<void> _init() async {
+    await _audioPlayer.setFilePath(widget.song.mp3Path);
+  }
+
+  void _playAudio() {
+    _audioPlayer.play();
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Recibir los datos de la canción desde ModalRoute
-    final song = ModalRoute.of(context)!.settings.arguments as Song?;
-
-// Asigna el objeto Song a la variable o campo si no es nulo.
-    //final songToAssign = song ?? null;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Reproduciendo ahora'),
@@ -23,24 +49,22 @@ class NowPlayingPage extends StatelessWidget {
           children: [
             ClipOval(
               child: Image.asset(
+                widget.song.albumArtUrl,
                 width: 200,
                 height: 200,
-                song?.albumArtUrl ?? 'assets/album/ima1.jpg',
                 fit: BoxFit.fitWidth,
               ),
             ),
             Text(
-              song?.title ?? 'Drive Breakbeat',
+              widget.song.title,
               style: const TextStyle(
-                fontSize:
-                    24, // Personaliza el tamaño de fuente según tus necesidades.
+                fontSize: 24,
               ),
             ),
             Text(
-              song?.subtitle ?? 'Rockot',
+              widget.song.subtitle,
               style: const TextStyle(
-                fontSize:
-                    16, // Personaliza el tamaño de fuente según tus necesidades.
+                fontSize: 16,
               ),
             ),
             const Padding(
@@ -49,27 +73,28 @@ class NowPlayingPage extends StatelessWidget {
                 'Duis do nulla do eu voluptate labore et est nisi. Incididunt fugiat cillum aliquip irure enim Lorem cillum non sit incididunt et qui ea id. Pariatur nisi qui labore do enim reprehenderit veniam dolore id non sit occaecat aute. Enim anim ut duis non veniam dolore cupidatat consectetur est voluptate deserunt. Consequat commodo est consequat amet nulla proident consequat aute sit cupidatat. Culpa ad sunt minim labore veniam ullamco id sint id. Irure qui reprehenderit occaecat fugiat irure consequat excepteur exercitation dolore voluptate qui duis.',
                 textAlign: TextAlign.justify,
                 style: TextStyle(
-                    fontFamily: 'rligth',
-                    fontSize: 15,
-                    color: Color.fromARGB(255, 21, 21, 21)),
+                  fontFamily: 'rligth',
+                  fontSize: 15,
+                  color: Color.fromARGB(255, 21, 21, 21),
+                ),
               ),
-            )
-            // Aquí puedes agregar la lógica de reproducción de la canción si es necesario.
+            ),
+            ElevatedButton(
+              onPressed: _playAudio,
+              child: const Text('Reproducir'),
+            ),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        fixedColor: Color.fromARGB(255, 91, 91, 88),
+        fixedColor: const Color.fromARGB(255, 91, 91, 88),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.info), label: 'Musica'),
           BottomNavigationBarItem(icon: Icon(Icons.logout), label: 'Salir'),
         ],
         onTap: (int index) {
-          // Aquí puedes agregar lógica específica para cada ítem del BottomNavigationBar.
-          // El índice (index) te dice qué ítem fue seleccionado (0, 1, 2, 3, etc.).
-          // Puedes realizar acciones diferentes para cada ítem.
           if (index == 0) {
             Navigator.pushNamed(context, routeHome);
           } else if (index == 1) {

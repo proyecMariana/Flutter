@@ -4,8 +4,6 @@ import 'package:flutter_music/pages/my_home_page.dart';
 import 'package:flutter_music/pages/now_play_page.dart';
 import 'package:flutter_music/pages/play_list_page.dart';
 
-
-
 const String routeHome = "/home";
 const String routeLogin = "/login";
 const String routePlayList = "/play_list";
@@ -21,7 +19,8 @@ class MyRouters {
       case "/play_list":
         return MaterialPageRoute(builder: (_) => const PlayListPage());
       case "/now_play":
-        return MaterialPageRoute(builder: (_) => const NowPlayingPage());
+        final Song song = settings.arguments as Song;
+        return MaterialPageRoute(builder: (_) => NowPlayingPage(song: song));
       default:
         return MaterialPageRoute(builder: (_) => const LoginPage());
     }

@@ -20,7 +20,7 @@ class ProfileHome extends StatelessWidget {
       ]),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        fixedColor: Color.fromARGB(255, 106, 106, 102),
+        fixedColor: const Color.fromARGB(255, 106, 106, 102),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.music_note), label: 'Music'),
           BottomNavigationBarItem(icon: Icon(Icons.logout), label: 'Salir'),
@@ -64,24 +64,26 @@ class ProfileDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(223, 234, 234, 232), // Color gris claro
-          borderRadius: BorderRadius.circular(10.0), // Bordes redondeados
+      child: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(223, 234, 234, 232), // Color gris claro
+            borderRadius: BorderRadius.circular(10.0), // Bordes redondeados
+          ),
+          width: 430, // Ancho del Container
+          height: 300, // Alto del Container
+          child: const Padding(
+              padding: EdgeInsets.all(7.0),
+              child: Text(
+                '¡Bienvenido a tu mundo de sonidos! \n\n Con nuestra aplicación, descubre la música que amas, crea listas de reproducción únicas y sumérgete en un viaje auditivo personalizado. \n\n ¿Listo para escuchar la melodía de tu vida? \n\n ¡Vamos!',
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                    fontFamily: 'rligth',
+                    fontSize: 18,
+                    color: Color.fromARGB(255, 21, 21, 21)),
+              )),
         ),
-        width: 430, // Ancho del Container
-        height: 300, // Alto del Container
-        child: const Padding(
-            padding: EdgeInsets.all(7.0),
-            child: Text(
-              '¡Bienvenido a tu mundo de sonidos! \n\n Con nuestra aplicación, descubre la música que amas, crea listas de reproducción únicas y sumérgete en un viaje auditivo personalizado. \n\n ¿Listo para escuchar la melodía de tu vida? \n\n ¡Vamos!',
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                  fontFamily: 'rligth',
-                  fontSize: 18,
-                  color: Color.fromARGB(255, 21, 21, 21)),
-            )),
-      ),
+      ), //despues de esta va el parentesis
     );
   }
 }

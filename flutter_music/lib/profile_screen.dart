@@ -11,9 +11,9 @@ class ProfileScreen extends StatelessWidget {
         Image.asset('assets/images/fondo_2.jpg'),
         Transform.translate(
           offset: const Offset(0, 100),
-          child: const Column(
+          child: Column(
             children: [
-              ProfileImage(),
+              const ProfileImage(),
               ProfileDetails(),
             ],
           ),
@@ -42,14 +42,18 @@ class ProfileImage extends StatelessWidget {
 }
 
 class ProfileDetails extends StatelessWidget {
-  const ProfileDetails({super.key});
+  final TextEditingController passwordController = TextEditingController();
+  final String expectedPassword = '123456';
+
+  ProfileDetails({super.key}); // Clave esperada
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 221, 221, 210), // Color gris claro
+          color: const Color.fromARGB(255, 221, 221, 210), // Color gris claro
           borderRadius: BorderRadius.circular(10.0), // Bordes redondeados
         ),
         width: 430, // Ancho del Container
@@ -91,6 +95,7 @@ class ProfileDetails extends StatelessWidget {
                 ),
                 SizedBox(
                   child: TextFormField(
+                    controller: passwordController,
                     decoration: const InputDecoration(
                       labelText: 'Password',
                       labelStyle: TextStyle(fontWeight: FontWeight.bold),
@@ -111,12 +116,36 @@ class ProfileDetails extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, routeHome);
+                    if (passwordController.text == expectedPassword) {
+                      Navigator.pushNamed(context, routeHome);
+                    } else {
+                      // Clave incorrecta, muestra una ventana modal
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Error de Ingreso'),
+                            content: const Text('La clave ingresada es incorrecta.'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(); // Cerrar la ventana modal
+                                },
+                                child: const Text('Cerrar'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 40, 155, 255),
                   ),
-                  child: const Text('Ingresar', style: TextStyle(color: Color.fromARGB(255,255,255,255)),),
+                  child: const Text(
+                    'Ingresar',
+                    style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                  ),
                 ),
               ],
             ),
