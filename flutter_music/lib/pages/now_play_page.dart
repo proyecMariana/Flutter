@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:flutter_music/Common/my_routers.dart';
@@ -35,6 +36,8 @@ class _NowPlayingPageState extends State<NowPlayingPage> {
 
         // La ruta es válida, establecer el archivo MP3 en el reproductor de audio
         await _audioPlayer.setAsset(widget.song.mp3Path);
+        // Configurar el control de volumen
+        _audioPlayer.setVolume(1.0);
       } else {
         // La ruta no es válida
         logger.e(
@@ -79,6 +82,10 @@ class _NowPlayingPageState extends State<NowPlayingPage> {
       var logger = Logger();
       logger.e('Error al detener el audio: $e');
     }
+  }
+
+  void _setVolume(double volume) {
+    _audioPlayer.setVolume(volume);
   }
 
   @override
@@ -147,6 +154,16 @@ class _NowPlayingPageState extends State<NowPlayingPage> {
                     onPressed: _stopAudio,
                   ),
                 ],
+              ),
+              const SizedBox(height: 20),
+              const Text('Control de Volumen'),
+              Slider(
+                value: _audioPlayer.volume,
+                onChanged: (value) {
+                  setState(() {
+                    _setVolume(value);
+                  });
+                },
               ),
             ],
           ),
