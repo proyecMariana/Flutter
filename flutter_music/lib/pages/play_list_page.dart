@@ -29,13 +29,13 @@ class _PlayListPageState extends State<PlayListPage> {
       title: 'Artista 3',
       subtitle: 'prazkhanal',
       albumArtUrl: 'assets/album/ima3.jpg',
-      mp3Path: 'assets/mp3/tema_2.mp3',
+      mp3Path: 'assets/mp3/tema_3.mp3',
     ),
     Song(
       title: 'Artista 4',
       subtitle: 'prazkhanal',
       albumArtUrl: 'assets/album/ima4.jpg',
-      mp3Path: 'assets/mp3/tema_2.mp3',
+      mp3Path: 'assets/mp3/tema_1.mp3',
     ),
     Song(
       title: 'Artista 5',
@@ -47,13 +47,13 @@ class _PlayListPageState extends State<PlayListPage> {
       title: 'Artista 6',
       subtitle: 'prazkhanal',
       albumArtUrl: 'assets/album/ima6.jpg',
-      mp3Path: 'assets/mp3/tema_2.mp3',
+      mp3Path: 'assets/mp3/tema_3.mp3',
     ),
     Song(
       title: 'Artista 7',
       subtitle: 'prazkhanal',
       albumArtUrl: 'assets/album/ima7.jpg',
-      mp3Path: 'assets/mp3/tema_2.mp3',
+      mp3Path: 'assets/mp3/tema_1.mp3',
     ),
     Song(
       title: 'Artista 8',

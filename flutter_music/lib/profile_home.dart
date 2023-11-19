@@ -10,12 +10,15 @@ class ProfileHome extends StatelessWidget {
         Image.asset('assets/images/fondo_2.jpg'),
         Transform.translate(
           offset: const Offset(0, 100),
-          child: const Column(
-            children: [
-              ProfileImage(),
-              ProfileDetails(),
-            ],
-          ),
+          child: const SizedBox(
+              child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ProfileImage(),
+                ProfileDetails(),
+              ],
+            ),
+          )),
         ),
       ]),
       bottomNavigationBar: BottomNavigationBar(
